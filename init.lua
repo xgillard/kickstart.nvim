@@ -184,8 +184,8 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
 -- Remap des touches navigationnelles du clavier US
-vim.keymap.set('n', '<', '[', { remap = true, desc = 'Agit comme [ pour la navigation' })
-vim.keymap.set('n', '>', ']', { remap = true, desc = 'Agit comme ] pour la navigation' })
+vim.keymap.set('n', '<leader><Left>d', vim.diagnostic.get_prev, { desc = 'Jump to previous diagnostic' })
+vim.keymap.set('n', '<leader><Right>d', vim.diagnostic.get_next, { desc = 'Jump to next diagnostic' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -281,6 +281,7 @@ require('lazy').setup({
       tabulate('=', 'equal sign')
       tabulate(',', 'comma')
       tabulate(';', 'semi-colon')
+      tabulate(':', 'colon')
       tabulate('&', 'ampersand')
       tabulate('|', 'pipe')
       tabulate('+', 'plus')
