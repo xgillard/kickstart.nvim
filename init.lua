@@ -187,6 +187,10 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 vim.keymap.set('n', '<leader><Left>d', vim.diagnostic.get_prev, { desc = 'Jump to previous diagnostic' })
 vim.keymap.set('n', '<leader><Right>d', vim.diagnostic.get_next, { desc = 'Jump to next diagnostic' })
 
+-- Remap des touches pour la navigation des erreurs d'orthographe.
+vim.keymap.set('n', '<leader><Left>s', '[s', { desc = 'Previous spell checking mistake' })
+vim.keymap.set('n', '<leader><Right>s', ']s', { desc = 'Next spell checking mistake' })
+
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
 -- is not what someone will guess without a bit more experience.
