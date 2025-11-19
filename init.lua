@@ -91,7 +91,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
-vim.g.have_nerd_font = false
+vim.g.have_nerd_font = true
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
@@ -109,6 +109,13 @@ vim.o.mouse = 'a'
 
 -- Don't show the mode, since it's already in the status line
 vim.o.showmode = false
+
+-- Place a colored column ad line 80
+vim.o.colorcolumn = '80'
+
+-- Spell checker
+vim.o.spelllang = 'en_us,fr'
+vim.o.spell = true
 
 -- Sync clipboard between OS and Neovim.
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
@@ -249,6 +256,37 @@ require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
 
+  { -- Align stuff vertically
+    'godlygeek/tabular',
+    config = function()
+      local function tabulate(sep, name)
+        -- This function adds a -- mapping to vertically align text
+        -- based on a given separator character. This is useful when
+        -- working with raw un processed CSV files, markdown tables
+        -- or latex tables.
+        vim.keymap.set(
+          'v', -- visual mode
+          '--' .. sep, -- double dash then alignment separator
+          ":'<'>Tabularize /" .. sep .. '<enter>', -- the command
+          { desc = 'Tabularize on ' .. name .. ' [' .. sep .. ']' }
+        )
+      end
+
+      tabulate("'", 'single quote')
+      tabulate('"', 'double quote')
+      tabulate('=', 'equal sign')
+      tabulate(',', 'comma')
+      tabulate(';', 'semi-colon')
+      tabulate('&', 'ampersand')
+      tabulate('|', 'pipe')
+      tabulate('+', 'plus')
+      tabulate('-', 'minus')
+      tabulate('*', 'star')
+      tabulate('/', 'slash')
+      tabulate('$', 'dollar')
+      tabulate('#', 'hash sign')
+    end,
+  },
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
   -- keys can be used to configure plugin behavior/loading/etc.
