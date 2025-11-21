@@ -720,7 +720,42 @@ require('lazy').setup({
       local servers = {
         -- clangd = {},
         -- gopls = {},
-        pyright = {},
+        -- *** PYTHON ***
+        -- pyright est un typechecker comme mypy, sauf qu'il est plus simple et
+        -- beaucoup plus rapide.
+        pyright = {
+          settings = {
+            python = {
+              analysis = {
+                -- désactive les capacités de formattage de pyright
+                diagnosticSeverityOverrides = {
+                  -- Ruff gère très bien les imports et variables inutilisés (F401, F841)
+                  reportUnusedImport = 'none',
+                  reportUnusedVariable = 'none',
+
+                  -- ruff gère aussi le style, donc on peut taire ceci
+                  reportUnusedClass = 'none',
+                  reportUnusedFunction = 'none',
+                },
+
+                -- on s'assure que le type checking reste actif (basic ou standard)
+                typeCheckingMode = 'standard',
+              },
+            },
+          },
+        },
+        -- ruff sert à faire le linting et le formattage. On l'a activé
+        -- automatiquement via l'outil "conform" (voir fonction formatters_by_ft)
+        ruff = {
+          cmd = { 'ruff', 'server' },
+          init_options = {
+            settings = {
+              args = {}, -- pas envie de passer des arguments additionnels.
+            },
+          },
+        },
+
+        -- *** RUST ***
         rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
@@ -815,6 +850,7 @@ require('lazy').setup({
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
+        python = { 'ruff_fix', 'ruff_format' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
